@@ -1,0 +1,93 @@
+<html>
+	<head>
+		<title>Metode Numerik : Regresi Linier</title>
+	</head>
+	<body>
+		<table border="1">
+			<tr>
+				<th width='113'><b>Data Ke</b></th>
+				<th width='113'><b>x</b></th>
+				<th width='113'><b>y</b></th>
+				<th width='113'><b>y'</b></th>
+				<th width='113'><b>x^2</b></th>
+				<th width='113'><b>y^2</b></th>
+				<th width='113'><b>x*y</b></th>
+				<th width='113'><b>Error</b></th>
+			</tr>
+			<script type="text/javascript">
+				var n = prompt("Masukkan jumlah nilai X dan Y yang diinginkan : ", "");
+				
+				var x = new Array();
+				var y = new Array();
+				var xPangkatDua = new Array();
+				var yPangkatDua = new Array();
+				var xKaliY = new Array();
+				var xSigma = 0.0;
+				var ySigma = 0.0;
+				var xPktDuaSigma = 0.0;
+				var yPktDuaSigma = 0.0;
+				var xKaliYSigma = 0.0;
+				
+				for(var i = 1; i <= n; i++){
+					var xIn = prompt("Masukkan nilai X :", "");
+					x[i] = parseFloat(xIn);
+					xSigma = xSigma + x[i];
+					var yIn = prompt("Masukkan nilai Y :", "");
+					y[i] = parseFloat(yIn);
+					ySigma = ySigma + y[i];
+					xPangkatDua[i] = x[i] ** 2;
+					yPangkatDua[i] = y[i] ** 2;
+					xPktDuaSigma = xPktDuaSigma + xPangkatDua[i];
+					yPktDuaSigma = yPktDuaSigma + yPangkatDua[i];
+					xKaliY[i] = x[i] * y[i];
+					xKaliYSigma = xKaliYSigma + xKaliY[i];
+				}
+				
+				var m = (n * xKaliYSigma - xSigma * ySigma)/(n * xPktDuaSigma - xSigma ** 2);
+				var c = (ySigma * xPktDuaSigma - xSigma * xKaliYSigma)/(n * xPktDuaSigma - xSigma ** 2);
+				var yMain = new Array();
+				var err = new Array();
+				var errSigma = 0.0;
+				
+				document.write("<b>Gradien (m)</b><br/>");
+				document.write(m+"<br/><br/>")
+				document.write("<b>Konstanta (c)</b><br/>");
+				document.write(c+"<br/><br/>")
+				document.write("<b>Formula Utama (y)</b><br/>");
+				document.write("y = "+m+"x + "+c+"<br/><br/>");
+				
+				for(var i = 1; i <= n; i++){
+					document.write("<tr>");
+					document.write("<td width='113'>"+i+"</td>");
+					document.write("<td width='113'>"+x[i]+"</td>");
+					document.write("<td width='113'>"+y[i]+"</td>");
+					yMain[i] = m * x[i] + c;
+					document.write("<td width='113'>"+yMain[i]+"</td>");
+					document.write("<td width='113'>"+xPangkatDua[i]+"</td>");
+					document.write("<td width='113'>"+yPangkatDua[i]+"</td>");
+					document.write("<td width='113'>"+xKaliY[i]+"</td>");
+					err[i] = y[i] - yMain[i];
+					document.write("<td width='113'>"+Math.abs(err[i])+"</td>");
+					errSigma = errSigma + err[i];
+					document.write("</tr>");
+				}
+				
+				document.write("<tr>");
+				document.write("<td align=\"right/\"><b>Σ</b></td>");
+				document.write("<td>"+xSigma+"</td>");
+				document.write("<td>"+ySigma+"</td>");
+				document.write("<td> </td>");
+				document.write("<td>"+xPktDuaSigma+"</td>");
+				document.write("<td>"+yPktDuaSigma+"</td>");
+				document.write("<td>"+xKaliYSigma+"</td>");
+				document.write("<td>"+errSigma+"</td>");
+				document.write("</tr>");
+				
+				
+				document.write("<b>Nilai Error rata-rata</b><br/>");
+				document.write(errSigma+" / "+n+" = "+ errSigma / n +"<br/><br/>");
+				
+			</script>
+		</table>
+	</body>
+</html>
